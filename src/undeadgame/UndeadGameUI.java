@@ -7,6 +7,9 @@ import java.util.Scanner;
 import undeadgame.creatures.*;
 import undeadgame.util.*;
 
+/**
+ * A class encapsulating all the UI-related methods of the game
+ */
 public class UndeadGameUI {
   private static final Scanner READ = new Scanner(System.in);
   private static final int DELAY = 300; // in ms
