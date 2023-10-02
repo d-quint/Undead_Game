@@ -427,6 +427,7 @@ public class UndeadGameUI {
     switch (gameInstance.getEnemy().getType()) {
       case ZOMBIE:
         if (((Zombie) gameInstance.getEnemy()).getZombieType() == Zombie.ZombieType.NORMAL) {
+          skill = "1";
           break;
         }
       
