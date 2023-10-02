@@ -452,8 +452,6 @@ public class UndeadGameUI {
           skill = "1";
           break;
         }
-
-        break;
       default:
         switch ((int) (Math.random() * 2)) {
           case 0:
