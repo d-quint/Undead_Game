@@ -50,8 +50,7 @@ public class UndeadGameUI {
     printMessage(new String[] {
       "Do you want to play again?",
       "  [1] YES",
-      "  [2] No",
-      "  [3] Oh hell no",
+      "  [2] Not really"
     }, MsgType.GAMEMASTER);
 
     do {
@@ -62,9 +61,6 @@ public class UndeadGameUI {
         return true;
       case "2":
         printMessage("Goodbye!", MsgType.GAMEMASTER);
-        break;
-      case "3":
-        printMessage("Fine.", MsgType.GAMEMASTER);
         break;
       default:
         printMessage("You picked an invalid option. Perhaps you failed to input a number?", MsgType.ERROR);
@@ -338,7 +334,7 @@ public class UndeadGameUI {
           gameInstance.setEnemy(new Ghost("CASPER"));
           break;
         case 3:
-          gameInstance.setEnemy(new Skeleton("SANS UNDERTALE"));
+          gameInstance.setEnemy(new Skeleton("SANS"));
           break;
         case 4:
           gameInstance.setEnemy(new Lich("LICHELLE"));
