@@ -75,6 +75,7 @@ public class Lich extends Skeleton {
    * @param  target  The commandable undead being casted a spell.
    * @return         The amount of HP received by the Lich.
    */
+  @Override
   public int skill1(Commandable target) {
     int heal = target.receiveDamage((int)(((Undead)target).getHp() * 0.1));
     return -super.receiveDamage(-heal);

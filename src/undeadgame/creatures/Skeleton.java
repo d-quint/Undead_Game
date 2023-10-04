@@ -1,7 +1,5 @@
 package undeadgame.creatures;
 
-// Skeleton: Skeleton as an undead, receives all the similar characteristics of an undead. Skeleton may attack other undead. Its attack damage is 70% of its HP. If skeleton HP is reducing to 0, same with the zombie, it will die. Skeleton has an 80 HP.
-
 /**
  * This class is used to represent a Skeleton. Skeletons are like virtual version of an
  * undead. It inherits all the characteristics that the undead has. Skeletons may
@@ -53,6 +51,12 @@ public class Skeleton extends Undead implements Commandable {
     return skillDesc[skill];
   }
 
+
+  @Override
+  public String getHPString() {
+    return this.getHp() + "/" + MAX_HP;
+  }
+
   @Override
   public void update() {
     int cappedHP = Math.min(super.getHp(), MAX_HP); // Limit the skeleton's HP to its max HP.
@@ -62,11 +66,6 @@ public class Skeleton extends Undead implements Commandable {
       super.setHp(0);
       super.isDead(true);
     }
-  }
-
-  @Override
-  public String getHPString() {
-    return this.getHp() + "/" + MAX_HP;
   }
 
   @Override
@@ -92,7 +91,7 @@ public class Skeleton extends Undead implements Commandable {
   }
 
   @Override
-  public int skill1(Undead u) {
+  public int skill1(Commandable u) {
     // Throw an error indicating that the skeleton has no skill 1.
     throw new UnsupportedOperationException(super.getName() + " has no skill 1!");
   }

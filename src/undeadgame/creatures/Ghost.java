@@ -96,8 +96,8 @@ public class Ghost extends Undead implements Commandable {
    * @return         The amount of HP received by the ghost.
    */
   @Override
-  public int skill1(Undead target) {
-    int heal = (int) (target.getHp() * 0.1);
+  public int skill1(Commandable target) {
+    int heal = (int) (((Undead)target).getHp() * 0.1);
     super.setHp(super.getHp() + heal);
     return heal;
   }

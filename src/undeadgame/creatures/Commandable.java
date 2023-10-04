@@ -41,7 +41,7 @@ interface Commandable {
    * @param u The target Commandable Undead.
    * @return The amount of damage dealt or HP healed.  
    */
-  public int skill1(Undead u);
+  public int skill1(Commandable u);
 
   /**
    * This method is used to activate an undead's second skill. (Often a special one)
