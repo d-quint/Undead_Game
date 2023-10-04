@@ -14,7 +14,7 @@ public class Mummy extends Zombie {
 
   // Constructor:
   public Mummy(String name) {
-    super(name);
+    super(name + " (Mummy)");
     super.isMummy(true);
     diedOnce = false;
   }
@@ -56,9 +56,6 @@ public class Mummy extends Zombie {
     } else {
       super.canAttack(true);
     }
-
-    // Cap the mummy's HP to zombie's max HP.
-    Math.min(super.getHp(), Zombie.MAX_HP);
 
     super.update();
   }  

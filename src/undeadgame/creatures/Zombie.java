@@ -75,7 +75,8 @@ public class Zombie extends Undead implements Commandable {
     }
 
     // Cap the zombie's HP to its max HP.
-    Math.min(super.getHp(), MAX_HP);
+    int cappedHP = Math.min(super.getHp(), MAX_HP);
+    super.setHp(cappedHP);
 
     if (super.getHp() <= 0) { // If the zombie's HP is less than or equal to 0, it dies.
       super.setHp(0);

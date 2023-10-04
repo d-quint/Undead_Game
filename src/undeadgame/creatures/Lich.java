@@ -14,8 +14,7 @@ public class Lich extends Skeleton {
 
   // Constructor:
   public Lich(String name) {
-    super(name);
-    super.setName(name + " (Lich)");
+    super(name + " (Lich)");
     super.setLich(true);
   }
 
@@ -63,7 +62,8 @@ public class Lich extends Skeleton {
     }
     
     // Cap the Lich's HP to its max HP
-    Math.min(super.getHp(), Skeleton.MAX_HP);
+    int cappedHP = Math.min(super.getHp(), Skeleton.MAX_HP);
+    super.setHp(cappedHP);
   }
 
   /**
