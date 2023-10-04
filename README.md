@@ -19,7 +19,7 @@ This is a game about the undead--zombies and stuff.
 4. Run the main class using the following command:
 
     ```bash
-    java src/Main
+    java bin/Main
     ```
 
 ## USAGE
