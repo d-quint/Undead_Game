@@ -28,9 +28,25 @@ public class Ghost extends Undead implements Commandable {
     super.setName(name + " (Ghost)");
   }
 
+  // Command information getters:
+  public String getSkillName(int skill) {
+    if (skill < 0 || skill >= this.commands.length) {
+      return null;
+    }
+
+    return this.commands[skill];
+  }
+
+  public String getSkillInfo(int skill) {
+    if (skill < 0 || skill >= this.commandDesc.length) {
+      return null;
+    }
+
+    return this.commandDesc[skill];
+  }
+
   
   // Custom methods (Overridden methods from Commandable interface):
-
   @Override
   public String getHPString() {
     return super.getHp() + "/" + MAX_HP;
@@ -59,6 +75,11 @@ public class Ghost extends Undead implements Commandable {
   }
 
   @Override
+  /**
+   * NORMAL ATTACK
+   * This method is called when the ghost attacks another undead. The ghost will
+   * deal damage to the target. The damage is 20% of the ghost's HP.
+   */
   public int normalAttack(Commandable target) {
     return target.receiveDamage((int)(super.getHp() * 0.2)); // Ghost's attack damage is 20% of its HP.
   }
@@ -81,6 +102,7 @@ public class Ghost extends Undead implements Commandable {
 
   @Override
   public int skill2(Commandable u) {
-    return -444; // Ghost has no skill 2.
+    // Throw an error indicating that the ghost has no skill 2.
+    throw new UnsupportedOperationException("Ghost has no skill 2.");
   }
 }
