@@ -20,7 +20,7 @@ public class Ghost extends Undead implements Commandable {
 
   // Constructor:
   public Ghost(String name) {
-    super(name + " (Ghost)", 50);
+    super(name + " (Ghost)", MAX_HP);
   }
 
   @Override
