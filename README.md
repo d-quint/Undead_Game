@@ -1,18 +1,37 @@
-## Getting Started
+## Welcome to Undead Game!
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## ABOUT
 
-## Folder Structure
+This is a game about the undead--zombies and stuff.
 
-The workspace contains two folders by default, where:
+## INSTALLATION
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+1. Clone this repo.
+2. Make sure Java 8 is installed.
+3. Compile the main class using the following command:
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+    ```bash
+    javac src/Main.java -d bin
+    ```
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+  This will create a `Main.class` file in the `bin` directory.
 
-## Dependency Management
+4. Run the main class using the following command:
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+    ```bash
+    java src/Main
+    ```
+
+## USAGE
+
+Having been inspired by how users interact with bots in Discord, this game is played by typing prefixed commands into the terminal.
+
+(todo: add list of commands)
+
+## CONTRIBUTING
+
+This was made possible by the combined efforts of:
+
+- me
+- John Christian Paglinawan
+- Dharmveer Sandhu
