@@ -7,7 +7,7 @@
 To run the .jar file, open a terminal, go to the .jar file's path, and type the following command:
 
 ```bash
-java -jar undeadgame.jar
+java -jar Undead_Game.jar
 ```
 
 ## ABOUT
