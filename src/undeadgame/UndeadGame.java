@@ -4,30 +4,20 @@ import undeadgame.creatures.*;
 import undeadgame.util.MsgType;
 
 public class UndeadGame {
-  public enum GameMode {
-    PVP,
-    SANDBOX
-  }
-
   private boolean gameOver;
   private boolean running;
 
-  private Undead player;
-  private Undead enemy;
-
-  private GameMode mode;
+  private Undead[] creatures;
 
   // Constructor:
   public UndeadGame() {
     gameOver = false;
     running = false;
-
-    this.mode = GameMode.PVP;
   }
 
-  public UndeadGame(GameMode mode) {
+  public UndeadGame(boolean isSandboxMode) {
     this();
-    this.mode = mode;
+    this.isSandboxMode = isSandboxMode;
   }
 
   // Getters:
@@ -35,28 +25,12 @@ public class UndeadGame {
     return gameOver;
   }
 
-  public GameMode getGameMode() {
-    return mode;
+  public boolean isSandboxMode() {
+    return isSandboxMode;
   }
 
   public boolean isRunning() {
     return running;
-  }
-
-  public Undead getPlayer() {
-    if (player == null) {
-      return new Undead("Player", 100);
-    }
-
-    return player;
-  }
-
-  public Undead getEnemy() {
-    if (enemy == null) {
-      return new Undead("Enemy", 100);
-    }
-
-    return enemy;
   }
 
   // Setters:
@@ -64,43 +38,27 @@ public class UndeadGame {
     this.gameOver = gameOver;
   }
 
-  public void setGameMode(GameMode mode) {
-    this.mode = mode;
-  }
-
-  public void setPlayer(Undead player) {
-    this.player = player;
+  public void setSandboxMode(boolean isSandboxMode) {
+    this.isSandboxMode = isSandboxMode;
   }
 
   public void setIsRunning(boolean running) {
     this.running = running;
   }
 
-  public void setEnemy(Undead enemy) {
-    this.enemy = enemy;
-  }
-
-  public int checkWhoDied() {
-    if (player.isDead() || enemy.isDead()) {
-      this.setGameOver(true);
-      this.setIsRunning(false);
-    }
-    
-    if (player.isDead()) {
-      return 1;
-    } else if (enemy.isDead()) {
-      return 2;
-    }
-
-    return 0;
-  }
-  
   /**
-   * Executes a command in the game. This must be overridden by the gamemode subclasses.
+   * Executes a command in the game.
+   * Depending on whether the mode is PVP or Sandbox, there will be a different list of commands.
    * 
    * @param args The arguments to the command.
    */
-  public boolean executeGameCommand(String[] args) { return false; }
+  public boolean executeGameCommand(String[] args) {
+    if (isSandboxMode) {
+      return executeSandboxCommand(args);
+    } else {
+      return executePVPCommand(args);
+    }
+  }
 
   /**
    * Starts the game. This must be overridden by the gamemode subclasses.

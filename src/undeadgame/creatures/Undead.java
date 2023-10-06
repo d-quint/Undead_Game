@@ -1,6 +1,6 @@
 package undeadgame.creatures;
 
-class Undead {
+public class Undead {
 	// attributes
 	private String name;
 	private int hp;

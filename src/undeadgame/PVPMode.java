@@ -32,6 +32,21 @@ public class PVPMode extends UndeadGame {
     }, MsgType.GAMEMASTER);
   }
 
+  public int checkWhoDied() {
+    if (player.isDead() || enemy.isDead()) {
+      this.setGameOver(true);
+      this.setIsRunning(false);
+    }
+    
+    if (player.isDead()) {
+      return 1;
+    } else if (enemy.isDead()) {
+      return 2;
+    }
+
+    return 0;
+  }
+
   @Override
   public boolean executeGameCommand(String[] args) {
     String command = args[0];
