@@ -1,8 +1,18 @@
 ## Welcome to Undead Game!
 
+## DOWNLOAD .JAR FILE
+
+[Undead Game v1.0.0](https://filebin.net/jzofr3ozo92g7boc)
+
+To run the .jar file, open a terminal, go to the .jar file's path, and type the following command:
+
+```bash
+java -jar undeadgame.jar
+```
+
 ## ABOUT
 
-This is a game about the undead--zombies and stuff.
+Halloween is nearly approaching and all the superstitions about the dead are being revived again. There is a belief that dead ones may come back to life and interact with the living ones. With this phenomenon they are called undead. In the celebration of Halloween, tales of the undead are being brought up again and for their tale to survive they need to compete. 
 
 ## INSTALLATION
 
