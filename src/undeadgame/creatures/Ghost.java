@@ -85,10 +85,4 @@ public class Ghost extends Undead implements Commandable {
     this.update();
     return heal;
   }
-
-  @Override
-  public int skill2(Commandable u) {
-    // Throw an error indicating that the ghost has no skill 2.
-    throw new UnsupportedOperationException(super.getName() + " has no skill 2!");
-  }
 }

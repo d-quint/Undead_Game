@@ -11,15 +11,15 @@ This is a game about the undead--zombies and stuff.
 3. Compile the main class using the following command:
 
     ```bash
-    javac src/Main.java -d bin
+    javac src/Main.java -d bin -cp src
     ```
 
-  This will create a `Main.class` file in the `bin` directory.
+  This will create a `Main.class` file in the `bin` directory, and all the classes that it uses.
 
-4. Run the main class using the following command:
+4. Run the main class from the current directory using the following command:
 
     ```bash
-    java bin/Main
+    java -cp bin Main
     ```
 
 ## USAGE

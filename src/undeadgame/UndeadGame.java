@@ -54,7 +54,14 @@ public class UndeadGame {
 
         args -> {
           int choice = UndeadGameUI.displayChoices("What type of undead do you want to raise?", 
-            new String[]{"SKELETON", "LICH", "ZOMBIE", "MUMMY", "VAMPIRE", "GHOST"}, 
+            new String[]{
+              "SKELETON - Can only attack, and has 70% of its HP as attack damage.", 
+              "LICH - An immortal Skeleton that can cast a spell, taking the 10% of their target's HP and adding it to its HP.", 
+              "ZOMBIE - Can eat target to heal itself. Cannot attack when HP is lower than 50.", 
+              "MUMMY - A special Zombie that can revive after dying once, but cannot eat its own kind.", 
+              "VAMPIRE - Can bite target to heal itself. Cannot attack when HP is 0.", 
+              "GHOST - Can haunt to heal, and only receives 10% of the actual damage."
+            }, 
           MsgType.GAMEMASTER);
 
           Undead undead = null;
@@ -173,20 +180,22 @@ public class UndeadGame {
 
           if (attacker.isDead()) {
             if ((attacker instanceof Mummy)) {
-              if (!((Mummy)attacker).diedOnce()) {
-                UndeadGameUI.printMessage(attacker.getName() + " is dead! However, it can still revive!", MsgType.ERROR);
+              if (!(((Mummy)attacker).diedOnce())) {
+                UndeadGameUI.printMessage(attacker.getName() + " is dead! However, it can still revive!", MsgType.GAMEMASTER);
                 switch (UndeadGameUI.displayChoices("Do you want to revive " + attacker.getName() + "?", new String[]{"YES", "NO"}, MsgType.GAMEMASTER)) {
                   case 1:
-                    reviveMummy((Mummy)attacker);
+                    if (!reviveMummy((Mummy)attacker)) {
+                      return true;
+                    }
                     break;
                   default:
                     return true;
                 }
-              }
-            } else {
-              UndeadGameUI.printMessage(attacker.getName() + " is dead! It cannot attack!", MsgType.ERROR);
-              return true;
+              } 
             }
+
+            UndeadGameUI.printMessage(attacker.getName() + " is dead! It cannot attack!", MsgType.ERROR);
+            return true;
           }
 
           if (target.isDead()) {
@@ -200,7 +209,7 @@ public class UndeadGame {
           }
 
           // Check if they are incapacitated immortals
-          if (!canImmortalAttack(attacker) || !canImmortalAttack(target)) {
+          if (!canImmortalAttack(attacker)) {
             return true;
           }
 
@@ -209,43 +218,77 @@ public class UndeadGame {
           return true;
         }
     ));
+
+    gameCommands.add(
+      new Command("CLEANUP",  
+
+        "Deletes all currently dead undeads", 
+
+        args -> {
+          if (creatures.isEmpty()) {
+            UndeadGameUI.printMessage("You have not raised any undeads yet!", MsgType.ERROR);
+            return true;
+          }
+
+          ArrayList<Undead> deadUndeads = new ArrayList<Undead>();
+
+          for (Undead undead : creatures) {
+            if (undead.isDead()) {
+              deadUndeads.add(undead);
+            }
+          }
+
+          if (deadUndeads.isEmpty()) {
+            UndeadGameUI.printMessage("There are no dead undeads to clean up!", MsgType.ERROR);
+            return true;
+          }
+
+          for (Undead undead : deadUndeads) {
+            creatures.remove(undead);
+          }
+
+          UndeadGameUI.printMessage("You have successfully cleaned up all the dead undeads!", MsgType.GAMEMASTER);
+
+          return true;
+        }
+    ));
   }
 
-  private boolean canImmortalAttack(Undead attacker) {
-    if ((attacker instanceof Lich)) {
-      if (!((Lich)attacker).canItAttack()) {
+  private boolean canImmortalAttack(Undead immortal) {
+    if ((immortal instanceof Lich)) {
+      if (!((Lich)immortal).canItAttack()) {
         UndeadGameUI.printMessage(new String[] {
-          attacker.getName() + " has been incapacitated! It cannot attack anymore!",
+          immortal.getName() + " has been incapacitated! It cannot attack anymore!",
         }, MsgType.GAMEMASTER);
 
         return false;
       }
     }
 
-    if (attacker instanceof Vampire) {
-      if (!((Vampire)attacker).canItAttack()) {
+    if (immortal instanceof Vampire) {
+      if (!((Vampire)immortal).canItAttack()) {
         UndeadGameUI.printMessage(new String[] {
-          attacker.getName() + " has been incapacitated! It cannot attack anymore!",
+          immortal.getName() + " has been incapacitated! It cannot attack anymore!",
         }, MsgType.GAMEMASTER);
 
         return false;
       }
     }
 
-    if (attacker instanceof Zombie) {
-      if (attacker instanceof Mummy) {
-        if (!((Mummy)attacker).canItAttack()) {
+    if (immortal instanceof Zombie) {
+      if (immortal instanceof Mummy) {
+        if (!((Mummy)immortal).canItAttack()) {
           UndeadGameUI.printMessage(new String[] {
-            attacker.getName() + " has been incapacitated! It cannot attack anymore!",
+            immortal.getName() + " has been incapacitated! It cannot attack anymore!",
           }, MsgType.GAMEMASTER);
 
           return false;
         }
       }
 
-      if (!((Zombie)attacker).canItAttack()) {
+      if (!((Zombie)immortal).canItAttack()) {
         UndeadGameUI.printMessage(new String[] {
-          attacker.getName() + " has been incapacitated! It cannot attack anymore!",
+          immortal.getName() + " has been incapacitated! It cannot attack anymore!",
         }, MsgType.GAMEMASTER);
 
         return false;
@@ -283,13 +326,24 @@ public class UndeadGame {
         }
 
         if (attacker instanceof Mummy && deltaHP == -444) {
-          // Mummy's EAT skill failed because it cannot eat its own kind
+          // Error code -444 indicates that the Mummy tried to eat another Mummy
 
           UndeadGameUI.printMessage(new String[] {
             attacker.getName() + " tried to use " + getSkills(attacker)[skill - 1] + ", but it cannot eat its own kind!"
           }, MsgType.GAMEMASTER);
+
+          return;
         }
 
+        break;
+      case 3:
+        if (attacker instanceof Mummy) {
+          UndeadGameUI.printMessage(new String[] {
+            attacker.getName() + " tried to use REVIVE, but it is still alive!"
+          }, MsgType.GAMEMASTER);
+
+          return;
+        }
         break;
       default:
         break;
@@ -298,7 +352,7 @@ public class UndeadGame {
     // Display the result of the attack
 
     UndeadGameUI.printMessage(new String[] {
-      attacker.getName() + " used " + getSkills(attacker)[skill - 1] + " on " + target.getName() + "! It's super effective!",
+      attacker.getName() + " used " + getSkills(attacker)[skill - 1] + " on " + target.getName() + "! It's " + effectiveness(deltaHP) + " effective!",
     }, MsgType.GAMEMASTER);
 
     if (isAttack) {
@@ -323,6 +377,20 @@ public class UndeadGame {
 
     // Check if target is incapacitated
     canImmortalAttack(target);
+  }
+
+  private String effectiveness(int deltaHP) {
+    if (deltaHP == 0) {
+      return "not quite";
+    } else if (deltaHP > 0 && deltaHP <= 30) {
+      return "kinda";
+    } else if (deltaHP > 30 && deltaHP <= 100) {
+      return "super";
+    } else if (deltaHP > 100) {
+      return "super duper";
+    }
+
+    return "weirdly not";
   }
 
   private String[] getSkills(Undead undead) {
@@ -391,18 +459,14 @@ public class UndeadGame {
     return false;
   }
 
-  public void reviveMummy(Mummy target) {
-    int deltaHP = target.revive();
-
-    if (deltaHP == -444) {
-      // Mummy's REVIVE skill failed because it cannot be used yet (the mummy is still alive)
-
+  public boolean reviveMummy(Mummy target) {
+    if (!target.revive()) {
       UndeadGameUI.printMessage(new String[] {
         target.getName() + " tried to use REVIVE, but it cannot be used in its current state!",
         "Make sure " + target.getName() + " is dead (HP is 0) and has never used REVIVE before!"
       }, MsgType.GAMEMASTER);
 
-      return;
+      return false;
     }
 
     UndeadGameUI.printMessage(new String[] {
@@ -410,7 +474,7 @@ public class UndeadGame {
       target.getName() + " has been revived back to full HP! Glory to the might of Ra!"
     }, MsgType.GAMEMASTER);
 
-    return; 
+    return true; 
   }
 
   /**

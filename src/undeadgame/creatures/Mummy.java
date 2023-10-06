@@ -36,7 +36,7 @@ public class Mummy extends Zombie {
 
   @Override
   public void update() {
-    if (super.getHp() == 0) {
+    if (super.getHp() <= 0 && !diedOnce) {
       diedOnce = true;
     }
 
@@ -73,11 +73,12 @@ public class Mummy extends Zombie {
    * 
    * @return  The amount of HP received by the mummy.
    */
-  public int revive() {
-    if (diedOnce && super.getHp() == 0) {
-      return -super.receiveDamage(-MAX_HP);
+  public boolean revive() {
+    if (diedOnce && super.getHp() <= 0) {
+      super.setHp(Zombie.MAX_HP);
+      return true;
     } 
 
-    return -444; // Error code
+    return false;
   }
 }

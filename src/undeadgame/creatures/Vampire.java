@@ -95,10 +95,4 @@ public class Vampire extends Undead implements Commandable {
     int heal = (int) (((Undead)target).getHp() * 0.8);
     return -this.receiveDamage(-heal);
   }
-
-  @Override
-  public int skill2(Commandable u) {
-    // Throw an error indicating that the vampire has no skill 2.
-    throw new UnsupportedOperationException(super.getName() + " has no skill 2!");
-  }
 }

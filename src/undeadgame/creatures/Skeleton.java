@@ -77,10 +77,4 @@ public class Skeleton extends Undead implements Commandable {
     // Throw an error indicating that the skeleton has no skill 1.
     throw new UnsupportedOperationException(super.getName() + " has no skill 1!");
   }
-
-  @Override
-  public int skill2(Commandable u) {
-    // Throw an error indicating that the skeleton has no skill 2.
-    throw new UnsupportedOperationException(super.getName() + " has no skill 2!");
-  }
 }

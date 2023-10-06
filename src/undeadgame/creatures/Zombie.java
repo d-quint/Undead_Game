@@ -110,10 +110,4 @@ public class Zombie extends Undead implements Commandable {
     int heal = ((Undead)target).getHp() / 2;
     return -this.receiveDamage(-heal);
   }
-
-  @Override
-  public int skill2(Commandable u) {
-    // Throw an error indicating that the zombie has no skill 2.
-    throw new UnsupportedOperationException(super.getName() + " has no skill 2!");
-  }
 }
