@@ -151,66 +151,86 @@ public class UndeadGameUI {
 
   private static void initializeCommands() {
     // Initialize all commands, aliases, descriptions, and their actions
-    commands.add(new Command("START", "Starts the game", new Runnable() {
-      public boolean run(String[] args) {
-        if (gameInstance.isRunning()) {
-          printMessage("The game has already started!", MsgType.ERROR); 
+    commands.add(
+      new Command("START",
 
-          switch (displayChoices("Did you want to restart the game?", new String[] {"YES", "NO"}, MsgType.GAMEMASTER)) {
-            case 1:
-              gameInstance = new UndeadGame();
-              printMessage("Game restarted successfully.", MsgType.GAMEMASTER);
-              gameInstance.start();
-              break;
-            case 2:
-              break;
-            default:
-              printMessage("You picked an invalid option.", MsgType.ERROR);
+        "Starts the game",
+        
+        args -> {
+          if (gameInstance.isRunning()) {
+            printMessage("The game has already started!", MsgType.ERROR);
+
+            switch (displayChoices("Did you want to restart the game?", new String[] { "YES", "NO" }, MsgType.GAMEMASTER)) {
+              case 1:
+                gameInstance = new UndeadGame();
+                printMessage("Game restarted successfully.", MsgType.GAMEMASTER);
+                gameInstance.start();
+                break;
+              case 2:
+                break;
+              default:
+                printMessage("You picked an invalid option.", MsgType.ERROR);
+            }
+
+            return true;
           }
 
-          return true;
-        } else {
           gameInstance.start();
           printMessage("Game started successfully.", MsgType.GAMEMASTER);
+
           return true;
         }
-      }
-    }));
+    ));
 
     commands.add(
-      new Command("HELP", "Lists all usable commands", new Runnable() {
-      public boolean run(String[] args) {
-        displayCommands();
+      new Command("HELP",
 
-        return true;
-      }
-    }));
+        "Lists all usable commands",
 
-    commands.add(new Command("EXIT", "Exit the program", new Runnable() {
-      public boolean run(String[] args) {
-        shouldExit = true;
+        args -> {
+          displayCommands();
+          return true;
+        }
+    ));
 
-        return true;
-      }
-    }));
+    commands.add(
+      new Command("EXIT",
 
-    commands.add(new Command("SETPREFIX", new String[] {"NEW_PREFIX"}, "Sets the prefix for commands", new Runnable() {
-      public boolean run(String[] args) {
-        prefix = args[1].charAt(0);
-        printMessage("The prefix has been set to \"" + prefix + "\".", MsgType.GAMEMASTER);
+        "Exit the program",
+        
+        args -> {
+          shouldExit = true;
+          return true;
+        }
+    ));
 
-        return true;
-      }
-    }));
+    commands.add(
+      new Command("SETPREFIX",
 
-    commands.add(new Command("SETNAME", new String[] {"NEW_NAME"}, "Sets the name of the player", new Runnable() {
-      public boolean run(String[] args) {
-        playerName = args[1].toUpperCase();
-        printMessage("Your name has been set to \"" + playerName + "\".", MsgType.GAMEMASTER);
+        new String[] { "NEW_PREFIX" },
 
-        return true;
-      }
-    }));
+        "Sets the prefix for commands",
+
+        args -> {
+          prefix = args[1].charAt(0);
+          printMessage("The prefix has been set to \"" + prefix + "\".", MsgType.GAMEMASTER);
+          return true;
+        }
+    ));
+
+    commands.add(
+      new Command("SETNAME",
+
+        new String[] { "NEW_NAME" },
+
+        "Sets the name of the player",
+
+        args -> {
+          playerName = args[1].toUpperCase();
+          printMessage("Your name has been set to \"" + playerName + "\".", MsgType.GAMEMASTER);
+          return true;
+        }
+    ));
   }
 
   private static void displayCommands() {

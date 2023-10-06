@@ -74,19 +74,29 @@ public class UndeadGame {
   }
 
   private void initializeCommands() {
-    gameCommands.add(new Command("POPULATE", "Raise an undead from the depths of hell", new Runnable() {
-      public boolean run(String[] args) {
-        UndeadGameUI.printMessage("You have raised an undead from the depths of hell!", MsgType.GAMEMASTER);
-        return true;
-      }
-    }));
+    gameCommands.add(
+      new Command("POPULATE",  
+
+        "Raise an undead from the depths of hell", 
+
+        args -> {
+          UndeadGameUI.printMessage("You have raised an undead!", MsgType.GAMEMASTER);
+          return true;
+        }
+    ));
     
-    gameCommands.add(new Command("ATTACK", "Pick an undead to command and attack another undead", new Runnable() {
-      public boolean run(String[] args) {
-        UndeadGameUI.printMessage("You have attacked an undead!", MsgType.GAMEMASTER);
-        return true;
-      }
-    }));
+    gameCommands.add(
+      new Command("ATTACK",  
+
+        new String[]{"ATTACKER_NAME", "TARGET_NAME"}, 
+
+        "Pick an undead to command and attack another undead", 
+
+        args -> {
+          UndeadGameUI.printMessage("You have attacked an undead!", MsgType.GAMEMASTER);
+          return true;
+        }
+    ));
   }
 
   /**
