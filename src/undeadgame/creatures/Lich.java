@@ -9,13 +9,14 @@ package undeadgame.creatures;
 public class Lich extends Skeleton { 
   private boolean canAttack;
 
-  private static final String[] skills = { "NORMAL ATTACK", "CAST SPELL" }; // Lich's skills.
-  private static final String[] skillDesc = { "Attack your enemy with your skeletal bow! (Damage: 70% of your HP)", "Cast a spell on your enemy and heal yourself by taking 10% of their HP!" }; // Lich's skill descriptions.
+  public static final String[] skills = { "NORMAL ATTACK", "CAST SPELL" }; // Lich's skills.
+  public static final String[] skillDesc = { "Attack your enemy with your skeletal bow! (Damage: 70% of your HP)", "Cast a spell on your enemy and heal yourself by taking 10% of their HP!" }; // Lich's skill descriptions.
 
   // Constructor:
   public Lich(String name) {
     super(name + " (Lich)");
     super.setLich(true);
+    this.canAttack = true;
   }
 
   // Setters:
@@ -31,23 +32,6 @@ public class Lich extends Skeleton {
   // Getter:
   public boolean canItAttack() {
     return this.canAttack;
-  }
-
-  // Skill information static getters:
-  public static String getSkillName(int skill) {
-    if (skill < 0 || skill >= skills.length) {
-      return null;
-    }
-
-    return skills[skill];
-  }
-
-  public static String getSkillInfo(int skill) {
-    if (skill < 0 || skill >= skillDesc.length) {
-      return null;
-    }
-
-    return skillDesc[skill];
   }
   
   // Custom methods:

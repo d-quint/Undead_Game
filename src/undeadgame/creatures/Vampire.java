@@ -13,8 +13,8 @@ public class Vampire extends Undead implements Commandable {
 
   private boolean canAttack;
 
-  private static final String[] skills = { "NORMAL ATTACK", "BITE" } ; // Vampire's skills.
-  private static final String[] skillDesc = { "Attack your enemy with your sharp claws! (Damage: 100% of your HP)", "Bite, take a sip of your target's blood, and gain 80% of their HP!" }; // Vampire's skill descriptions.
+  public static final String[] skills = { "NORMAL ATTACK", "BITE" } ; // Vampire's skills.
+  public static final String[] skillDesc = { "Attack your enemy with your sharp claws! (Damage: 100% of your HP)", "Bite, take a sip of your target's blood, and gain 80% of their HP!" }; // Vampire's skill descriptions.
 
   // Constructor:
   public Vampire(String name) {
@@ -35,23 +35,6 @@ public class Vampire extends Undead implements Commandable {
   // Getters
   public boolean canItAttack() {
     return this.canAttack;
-  }
-
-  // Skill information static getters:
-  public static String getSkillName(int skill) {
-    if (skill < 0 || skill >= skills.length) {
-      return null;
-    }
-
-    return skills[skill];
-  }
-
-  public static String getSkillInfo(int skill) {
-    if (skill < 0 || skill >= skillDesc.length) {
-      return null;
-    }
-
-    return skillDesc[skill];
   }
 
   // Custom methods:

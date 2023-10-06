@@ -12,8 +12,8 @@ package undeadgame.creatures;
 public class Ghost extends Undead implements Commandable {
   public static final int MAX_HP = 50; // Ghost's max HP is 50.
 
-  private static final String[] skills = {"NORMAL ATTACK", "HAUNT"}; // Ghost's skills.
-  private static final String[] skillDesc = {
+  public static final String[] skills = {"NORMAL ATTACK", "HAUNT"}; // Ghost's skills.
+  public static final String[] skillDesc = {
     "Attack your enemy with your ghostly powers! (Damage: 20% of your HP)",
     "Heal yourself by 10% of your target's HP by haunting them!"
   }; // Ghost's skill descriptions.
@@ -27,24 +27,6 @@ public class Ghost extends Undead implements Commandable {
   public void setName(String name) {
     super.setName(name + " (Ghost)");
   }
-
-  // Skill information static getters:
-  public static String getSkillName(int skill) {
-    if (skill < 0 || skill >= skills.length) {
-      return null;
-    }
-
-    return skills[skill];
-  }
-
-  public static String getSkillInfo(int skill) {
-    if (skill < 0 || skill >= skillDesc.length) {
-      return null;
-    }
-
-    return skillDesc[skill];
-  }
-
   
   // Custom methods (Overridden methods from Commandable interface):
   @Override
@@ -64,13 +46,14 @@ public class Ghost extends Undead implements Commandable {
 
   @Override
   public void update() {
-    int cappedHp = Math.min(super.getHp(), MAX_HP); // Cap the ghost's HP to the max HP.
-    super.setHp(cappedHp);
-
     if (super.getHp() <= 0) { // If ghost HP is reduced to 0, it will be perished.
       super.setHp(0);
       super.isDead(true);
     }
+
+    // Limit the HP of the ghost to the maximum HP.
+    int cappedHP = Math.min(super.getHp(), MAX_HP);
+    super.setHp(cappedHP);
   }
 
   /**
@@ -99,6 +82,7 @@ public class Ghost extends Undead implements Commandable {
   public int skill1(Commandable target) {
     int heal = (int) (((Undead)target).getHp() * 0.1);
     super.setHp(super.getHp() + heal);
+    this.update();
     return heal;
   }
 

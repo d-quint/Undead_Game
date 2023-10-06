@@ -167,6 +167,7 @@ public class UndeadGameUI {
                 gameInstance.start();
                 break;
               case 2:
+                printMessage("Alright, game not restarted.", MsgType.GAMEMASTER);
                 break;
               default:
                 printMessage("You picked an invalid option.", MsgType.ERROR);
@@ -175,8 +176,9 @@ public class UndeadGameUI {
             return true;
           }
 
-          gameInstance.start();
           printMessage("Game started successfully.", MsgType.GAMEMASTER);
+          
+          gameInstance.start();
 
           return true;
         }
@@ -237,9 +239,9 @@ public class UndeadGameUI {
     printMessage("Here are the commands:", MsgType.GAMEMASTER);
 
     // Display a box-like structure similar to the embed in Discord
-    printMessage("---------------------------------------------------------------------", MsgType.GAMEMASTER);
+    printMessage("-------------------------------------------------------------------------------------------", MsgType.GAMEMASTER);
     printMessage("   COMMAND <ARG/S> - DESCRIPTION ", MsgType.GAMEMASTER);
-    printMessage("---------------------------------------------------------------------", MsgType.GAMEMASTER);
+    printMessage("-------------------------------------------------------------------------------------------", MsgType.GAMEMASTER);
 
     // Print all command information ((prefix)name <args, ...> | description)
     for (Command command : commands) {
@@ -263,7 +265,7 @@ public class UndeadGameUI {
       }
     }
 
-    printMessage("---------------------------------------------------------------------", MsgType.GAMEMASTER);
+    printMessage("-------------------------------------------------------------------------------------------", MsgType.GAMEMASTER);
   }
 
   private static void introduction() {

@@ -10,8 +10,8 @@ public class Skeleton extends Undead implements Commandable {
   public static final int MAX_HP = 80;
   private boolean isLich;
 
-  private static final String[] skills = { "NORMAL ATTACK" } ; // Skeleton's skills.
-  private static final String[] skillDesc = { "Attack your enemy and rattle their bones! (Damage: 70% of your HP)" }; // Skeleton's skill descriptions.
+  public static final String[] skills = { "NORMAL ATTACK" } ; // Skeleton's skills.
+  public static final String[] skillDesc = { "Attack your enemy and rattle their bones! (Damage: 70% of your HP)" }; // Skeleton's skill descriptions.
 
   // Constructor:
   public Skeleton(String name) {
@@ -33,24 +33,6 @@ public class Skeleton extends Undead implements Commandable {
   public boolean isLich() {
     return this.isLich;
   }
-
-  // Skill information static getters:
-  public static String getSkillName(int skill) {
-    if (skill < 0 || skill >= skills.length) {
-      return null;
-    }
-
-    return skills[skill];
-  }
-
-  public static String getSkillInfo(int skill) {
-    if (skill < 0 || skill >= skillDesc.length) {
-      return null;
-    }
-
-    return skillDesc[skill];
-  }
-
 
   @Override
   public String getHPString() {

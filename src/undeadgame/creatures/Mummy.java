@@ -9,8 +9,8 @@ package undeadgame.creatures;
 public class Mummy extends Zombie {
   public boolean diedOnce;
 
-  private static final String[] skills = { "NORMAL ATTACK", "EAT", "REVIVE" } ; // Mummy's skills.
-  private static final String[] skillDesc = { "Attack your target by infecting them! (Damage: 50% of your HP)", "Feast on the brains of your target and gain 50% of their HP!", "By the power vested in you by the gods, revive yourself with 100% HP! (You can only revive once!)" }; // Mummy's skill descriptions.  
+  public static final String[] skills = { "NORMAL ATTACK", "EAT", "REVIVE" } ; // Mummy's skills.
+  public static final String[] skillDesc = { "Attack your target by wrapping them with cloth! (Damage: 50% of your HP + 10% of target's HP)", "Feast on the brains of your target and gain 50% of their HP, as long as they aren't of the same kind!", "By the power vested in you by the gods, revive yourself with 100% HP! (You can only revive once!)" }; // Mummy's skill descriptions.  
 
   // Constructor:
   public Mummy(String name) {
@@ -26,35 +26,18 @@ public class Mummy extends Zombie {
     super.setName(name + " (Mummy)");
   }
 
-  // Skill information static getters:
-  public static String getSkillName(int skill) {
-    if (skill < 0 || skill >= skills.length) {
-      return null;
-    }
+  // Getters:
 
-    return skills[skill];
+  public boolean diedOnce() {
+    return diedOnce;
   }
 
-  public static String getSkillInfo(int skill) {
-    if (skill < 0 || skill >= skillDesc.length) {
-      return null;
-    }
-
-    return skillDesc[skill];
-  }
+  // Custom methods:
 
   @Override
   public void update() {
-    if (super.getHp() <= 0) { // If the mummy's HP is 0 or less, it cannot attack anymore.
-      super.setHp(0);
-      super.canAttack(false);
-
-      if (!diedOnce) { // If the mummy died once, it can be revived.
-        diedOnce = true;
-        return;
-      }
-    } else {
-      super.canAttack(true);
+    if (super.getHp() == 0) {
+      diedOnce = true;
     }
 
     super.update();
@@ -75,18 +58,18 @@ public class Mummy extends Zombie {
   }
 
   @Override
-  public int skill2(Commandable target) {
+  public int skill1(Commandable target) {
     if (((Undead)target).getName().contains(" (Mummy)")) { // Mummy does not eat its own kind.
       return -444; // Error code
     } else {
-      return super.skill2(target); // Mummy eats target
+      return super.skill1(target); // Mummy eats target
     }
   }
 
-  // Custom methods:
-
   /**
+   * SPECIAL SKILL: REVIVE
    * Revives the mummy, but only once per game.
+   * When a mummy dies for the first time, the user is prompted if they want to revive it.
    * 
    * @return  The amount of HP received by the mummy.
    */

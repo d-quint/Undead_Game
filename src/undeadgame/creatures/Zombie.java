@@ -15,13 +15,14 @@ public class Zombie extends Undead implements Commandable {
   private boolean isMummy;
   private boolean canAttack;
 
-  private static final String[] skills = { "NORMAL ATTACK", "EAT" }; // Zombie's skills.
-  private static final String[] skillDesc = { "Attack your target by infecting them! (Damage: 50% of your HP)", "Feast on the brains of your target and gain 50% of their HP!" }; // Zombie's skill descriptions.
+  public static final String[] skills = { "NORMAL ATTACK", "EAT" }; // Zombie's skills.
+  public static final String[] skillDesc = { "Attack your target by infecting them! (Damage: 50% of your HP)", "Feast on the brains of your target and gain 50% of their HP!" }; // Zombie's skill descriptions.
 
   // Constructor:
   public Zombie(String name) {
     super(name + " (Zombie)", MAX_HP);
     this.isMummy = false;
+    this.canAttack = true;
   }
 
   // Setters:
@@ -47,23 +48,6 @@ public class Zombie extends Undead implements Commandable {
     return this.canAttack;
   }
 
-  // Skill information static getters:
-  public static String getSkillName(int skill) {
-    if (skill < 0 || skill >= skills.length) {
-      return null;
-    }
-
-    return skills[skill];
-  }
-
-  public static String getSkillInfo(int skill) {
-    if (skill < 0 || skill >= skillDesc.length) {
-      return null;
-    }
-
-    return skillDesc[skill];
-  }
-
   // Custom methods:
 
   @Override
@@ -86,7 +70,7 @@ public class Zombie extends Undead implements Commandable {
 
   @Override
   public String getHPString() {
-    return super.getHp() + " / " + MAX_HP;
+    return super.getHp() + "/" + MAX_HP;
   }
 
   @Override

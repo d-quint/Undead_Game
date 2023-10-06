@@ -5,7 +5,7 @@ package undeadgame.creatures;
  * This takes away the frustration of having to check an Undead's type before using its methods.
  * It also preserves the original content of the Undead class.
  */
-interface Commandable {
+public interface Commandable {
   /**
    * This method is used to return a String representation of the Undead's HP.
    * 
