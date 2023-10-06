@@ -32,6 +32,11 @@ public class UndeadGame {
   private boolean running;
 
   /**
+   * An arraylist of all the game-specific commands in the game.
+   */
+  private ArrayList<Command> gameCommands;
+
+  /**
    * An arraylist of all the creatures in the game.
    * Each entry is an array 
    */
@@ -43,6 +48,7 @@ public class UndeadGame {
     running = false;
 
     creatures = new ArrayList<UndeadWithType>();
+    gameCommands = new ArrayList<Command>();
   }
 
   public UndeadGame(boolean isSandboxMode) {
@@ -67,6 +73,22 @@ public class UndeadGame {
     this.running = running;
   }
 
+  private void initializeCommands() {
+    gameCommands.add(new Command("POPULATE", "Raise an undead from the depths of hell", new Runnable() {
+      public boolean run(String[] args) {
+        UndeadGameUI.printMessage("You have raised an undead from the depths of hell!", MsgType.GAMEMASTER);
+        return true;
+      }
+    }));
+    
+    gameCommands.add(new Command("ATTACK", "Pick an undead to command and attack another undead", new Runnable() {
+      public boolean run(String[] args) {
+        UndeadGameUI.printMessage("You have attacked an undead!", MsgType.GAMEMASTER);
+        return true;
+      }
+    }));
+  }
+
   /**
    * Starts the game.
    * This method should be called after the game is initialized.
@@ -74,6 +96,11 @@ public class UndeadGame {
 	public void start() {
     running = true;
 
-    
+    initializeCommands();
+
+    // Append the game-specific commands to the list of commands in UndeadGameUI
+    for (Command command : gameCommands) {
+      UndeadGameUI.commands.add(command);
+    }
 	}
 }

@@ -154,22 +154,26 @@ public class UndeadGameUI {
     commands.add(new Command("START", "Starts the game", new Runnable() {
       public boolean run(String[] args) {
         if (gameInstance.isRunning()) {
-          printMessage("The game has already started!", MsgType.ERROR);
-        }
+          printMessage("The game has already started!", MsgType.ERROR); 
 
-        switch (displayChoices("Did you want to restart the game?", new String[] {"YES", "NO"}, MsgType.GAMEMASTER)) {
-          case 1:
-            gameInstance = new UndeadGame();
-            printMessage("Game restarted successfully.", MsgType.GAMEMASTER);
-            gameInstance.start();
-            break;
-          case 2:
-            break;
-          default:
-            printMessage("You picked an invalid option.", MsgType.ERROR);
-        }
+          switch (displayChoices("Did you want to restart the game?", new String[] {"YES", "NO"}, MsgType.GAMEMASTER)) {
+            case 1:
+              gameInstance = new UndeadGame();
+              printMessage("Game restarted successfully.", MsgType.GAMEMASTER);
+              gameInstance.start();
+              break;
+            case 2:
+              break;
+            default:
+              printMessage("You picked an invalid option.", MsgType.ERROR);
+          }
 
-        return true;
+          return true;
+        } else {
+          gameInstance.start();
+          printMessage("Game started successfully.", MsgType.GAMEMASTER);
+          return true;
+        }
       }
     }));
 
@@ -278,7 +282,7 @@ public class UndeadGameUI {
         return;
       }
 
-      if (command.run(args)) { // Run the command
+      if (command.run(args)) { // Run the command, return if it runs successfully
         return;
       }
     }
