@@ -1,40 +1,43 @@
 package undeadgame;
 
 import java.lang.Thread;
-import java.lang.Math;
 import java.util.Scanner;
 
-import undeadgame.creatures.*;
 import undeadgame.util.*;
 
 /**
  * A class encapsulating all the UI-related methods of the game
  */
 public class UndeadGameUI {
+  public static Command[] commands;
+
   public static final Scanner READ = new Scanner(System.in);
   public static final int DELAY = 300; // in ms
 
   public static char prefix = '!';
   public static String currentLine = "";
-
   public static String playerName = "";
-  public static UndeadGame gameInstance;
-
   public static boolean shouldExit = false;
 
+  public static UndeadGame gameInstance;
+
+  private static void loop() {
+    readLine();
+    processLine();
+  }
+
   public static boolean run() {
-    gameInstance = new UndeadGame();
+    setup();
     
     if (playerName.isEmpty()) {
       introduction();
     } else {
       printMessage(new String[] {
         "Alright, " + playerName + "!",
-        "Just a quick reminder of the commands:",
-        "  Type \"" + prefix + "quit\" to exit.",
-        "  Type \"" + prefix + "help\" for a quick rundown of general commands.",
-        "  Type \"" + prefix + "start\" to start the game.",
+        "Just a quick reminder of the commands:"
       }, MsgType.GAMEMASTER);
+
+      displayCommands();
     }
 
     while (!gameInstance.isGameOver()) {
@@ -47,123 +50,21 @@ public class UndeadGameUI {
 
     printMessage("Thanks for playing!", MsgType.GAMEMASTER);
 
-    printMessage(new String[] {
-      "Do you want to play again?",
-      "  [1] YES",
-      "  [2] Not really"
-    }, MsgType.GAMEMASTER);
-
     do {
-      readLine();
-
-      switch (currentLine) {
-      case "1":
+      switch (displayChoices("Do you want to play again?", new String[] {"YES", "NO"}, MsgType.GAMEMASTER)) {
+      case 1:
         return true;
-      case "2":
+      case 2:
         printMessage("Goodbye!", MsgType.GAMEMASTER);
-        break;
+        return false;
       default:
-        printMessage("You picked an invalid option. Perhaps you failed to input a number?", MsgType.ERROR);
+        printMessage("You picked an invalid option.", MsgType.ERROR);
         break;
       }
-    } while (!currentLine.equals("1") && !currentLine.equals("2") && !currentLine.equals("3"));
-
-    return false;
+    } while (true); 
   }
 
-  public static void introduction() {
-    System.out.println();
-    printMessage("Welcome to Undead Game! What's your name?", MsgType.GAMEMASTER);
-    
-    readLine();
-    playerName = currentLine.toUpperCase();
-
-    printMessage("Hello, " + playerName + "!", MsgType.GAMEMASTER);
-    printMessage("Type \"" + prefix + "quit\" to exit.", MsgType.GAMEMASTER);
-    printMessage("Type \"" + prefix + "help\" for a quick rundown of general commands.", MsgType.GAMEMASTER);  
-    printMessage("Type \"" + prefix + "start\" to start the game.", MsgType.GAMEMASTER);
-  }
-
-  public static void loop() {
-    printWarning();
-
-    readLine();
-    processLine();
-  }
-
-  public static void readLine() {
-    System.out.println("    | ");
-    printMessage("  " + (playerName.isEmpty() ? "STRANGER:" : playerName + ":"), MsgType.INPUT);
-
-    currentLine = READ.nextLine();
-    System.out.println("    | ");
-  }
-
-  public static void processLine() {
-    if (currentLine.startsWith("" + prefix)) {
-      String command = currentLine.substring(1);
-      String[] args = command.split(" ");
-
-      executeCommand(args);
-    } else {
-      printMessage("Unknown command \"" + currentLine + "\".", MsgType.ERROR);
-      printMessage("Make sure to start your commands with \"" + prefix + "\".", MsgType.WARNING);
-    }
-  }
-
-  public static void executeCommand(String[] args) {
-    if (((SandboxMode)gameInstance).executeGameCommand(args)) return; 
-    if (((PVPMode)gameInstance).executeGameCommand(args)) return;   
-
-    switch (args[0].toLowerCase()) {
-      case "quit":
-        printMessage("Quitting game...", MsgType.GAMEMASTER);
-        shouldExit = true;
-        break;
-      case "start":
-        executeStartCommand();
-        break;
-      case "help":
-        printMessage(new String[] {
-          "List of general-purpose commands:",
-          prefix + "quit - Quits the game.",
-          prefix + "help - Displays this list of general commands.",
-          prefix + "gamehelp - Displays a list of game-related commands.",
-          prefix + "setprefix <character> - Sets <character> as the new command prefix.",
-          prefix + "setname <string> - Sets <string> as the new display name.",
-          prefix + "start - Starts the game."
-        }, MsgType.GAMEMASTER);
-        break;
-      case "gamehelp":  
-        printMessage(new String[] {
-          "List of game-related commands:",
-          prefix + "listskills - Lists all the skills of your undead.",
-          prefix + "useskill <skill_number> | useskill - Puts into action a chosen skill. You may include arguments or not.",
-          prefix + "forfeit - Forfeits the game.",
-          prefix + "stats - Displays the stats of your undead and the enemy's."
-        }, MsgType.GAMEMASTER);
-        break;
-      case "setprefix":
-        if (args.length > 1) {
-          prefix = args[1].charAt(0);
-          printMessage("Prefix successfully set to \"" + prefix + "\".", MsgType.GAMEMASTER);
-        } else {
-          printMessage("No prefix specified.", MsgType.ERROR);
-        }
-        break;
-      case "setname":
-        if (args.length > 1) {
-          playerName = args[1].toUpperCase();
-          printMessage("Name successfully set to \"" + playerName + "\".", MsgType.GAMEMASTER);
-        } else {
-          printMessage("No name specified.", MsgType.ERROR);
-        }
-        break;
-      default:
-        printMessage("Unknown command \"" + args[0] + "\".", MsgType.ERROR);
-        break;
-    }
-  }
+  // UI-RELATED UTILITY METHODS:
 
   public static void printMessage(String message, MsgType type) {
     System.out.print("    | ");
@@ -204,68 +105,182 @@ public class UndeadGameUI {
     }
   }
 
-  public static void executeStartCommand() {
-    if (gameInstance.isRunning()) {
-      printMessage("The game has already started!", MsgType.ERROR);
-      printMessage(new String[] {
-        "Or did you want to restart another game?",
-        "  [1] YES",
-        "  [2] Not really",
-      }, MsgType.GAMEMASTER);
+  public static int displayChoices(String prompt, String[] choices, MsgType type) {
+    printMessage(prompt, type);
 
-      readLine();
-      
-      String response1, response2;
-
-      while (!currentLine.equals("1") && !currentLine.equals("2")) {
-        printMessage("You picked an invalid option. Perhaps you failed to input a number?", MsgType.ERROR);
-        readLine();
-      }
-
-      response1 = currentLine;
-
-      printMessage(new String[] {
-        "Which game mode do you want?",
-        "  [1] Player vs. Player (PVP)",
-        "  [2] Sandbox (EVE)",
-      }, MsgType.GAMEMASTER);
-
-      readLine();
-
-      while (!currentLine.equals("1") && !currentLine.equals("2")) {
-        printMessage("You picked an invalid option. Perhaps you failed to input a number?", MsgType.ERROR);
-        readLine();
-      }
-
-      response2 = currentLine;
-
-      switch (response1) {
-        case "1":
-          if (response2.equals("1")) {
-            gameInstance = new PVPMode();
-          } else {
-            gameInstance = new SandboxMode();
-          }
-          break;
-        case "2":
-          printMessage("Alright, then.", MsgType.GAMEMASTER);
-          return;
-        default:
-          printMessage("You picked an invalid option. Perhaps you failed to input a number?", MsgType.ERROR);
-          return;
-      }
+    for (int i = 0; i < choices.length; i++) {
+      printMessage("  [" + (i + 1) + "] " + choices[i], type);
     }
-    
-    gameInstance.start();
+
+    readLine();
+
+    int choice = -1;
+
+    try {
+      choice = Integer.parseInt(currentLine);
+    } catch (NumberFormatException e) {
+      printMessage("You picked an invalid option. Perhaps you failed to input a number?", MsgType.ERROR);
+      return displayChoices(prompt, choices, type);
+    }
+
+    if (choice < 1 || choice > choices.length) {
+      printMessage("You picked an invalid option. Perhaps you failed to input a number?", MsgType.ERROR);
+      return displayChoices(prompt, choices, type);
+    }
+
+    return choice;
   }
 
-  public static void printWarning() {
-    if (!gameInstance.getPlayer().canAttack()) {
-      printMessage(new String[] {
-        "You suddenly can't attack or use some skills! You're immobilized from not having enough HP.",
-        gameInstance.getPlayer().getName() + "'s current HP: " + gameInstance.getPlayer().getHPstring(),
-        "Either you forfeit the game, or you use an available skill that can heal you."
-      }, MsgType.GAMEMASTER);
+  public static void readLine() {
+    System.out.println("    | ");
+    printMessage("  " + (playerName.isEmpty() ? "STRANGER:" : playerName + ":"), MsgType.INPUT);
+
+    currentLine = READ.nextLine();
+    System.out.println("    | ");
+  }
+
+  // PRIVATE METHODS:
+
+  private static void setup() {
+    gameInstance = new UndeadGame();
+    commands = new Command[10];
+    
+    initializeCommands();
+  }
+
+  private static void initializeCommands() {
+    // Initialize all commands, aliases, descriptions, and their actions
+    commands[0] = new Command("START", "Starts the game", new Runnable() {
+      public boolean run(String[] args) {
+        if (gameInstance.isRunning()) {
+          printMessage("The game has already started!", MsgType.ERROR);
+        }
+
+        switch (displayChoices("Did you want to restart the game?", new String[] {"YES", "NO"}, MsgType.GAMEMASTER)) {
+          case 1:
+            gameInstance = new UndeadGame();
+            printMessage("Game restarted successfully.", MsgType.GAMEMASTER);
+            gameInstance.start();
+            break;
+          case 2:
+            break;
+          default:
+            printMessage("You picked an invalid option.", MsgType.ERROR);
+        }
+
+        return true;
+      }
+    });
+
+    commands[1] = new Command("HELP", "Lists all usable commands", new Runnable() {
+      public boolean run(String[] args) {
+        displayCommands();
+
+        return true;
+      }
+    });
+
+    commands[2] = new Command("EXIT", "Exit the program", new Runnable() {
+      public boolean run(String[] args) {
+        shouldExit = true;
+
+        return true;
+      }
+    });
+
+    commands[3] = new Command("SETPREFIX", new String[] {"NEW_PREFIX"}, "Sets the prefix for commands", new Runnable() {
+      public boolean run(String[] args) {
+        prefix = args[1].charAt(0);
+        printMessage("The prefix has been set to \"" + prefix + "\".", MsgType.GAMEMASTER);
+
+        return true;
+      }
+    });
+
+    commands[4] = new Command("SETNAME", new String[] {"NEW_NAME"}, "Sets the name of the player", new Runnable() {
+      public boolean run(String[] args) {
+        playerName = args[1].toUpperCase();
+        printMessage("Your name has been set to \"" + playerName + "\".", MsgType.GAMEMASTER);
+
+        return true;
+      }
+    });
+  }
+
+  private static void displayCommands() {
+    printMessage("Here are the commands:", MsgType.GAMEMASTER);
+
+    // Display a box-like structure similar to the embed in Discord
+    printMessage("---------------------------------------------------------------------", MsgType.GAMEMASTER);
+    printMessage("   COMMAND <ARG/S> - DESCRIPTION ", MsgType.GAMEMASTER);
+    printMessage("---------------------------------------------------------------------", MsgType.GAMEMASTER);
+
+    // Print all command information ((prefix)name <args, ...> | description)
+    for (Command command : commands) {
+      if (command != null) {
+        // Print name and arguments
+        String commandInfo = "  " + prefix + command.getName();
+
+        if (command.getArgs().length > 0) {
+          commandInfo += " <";
+
+          for (int i = 0; i < command.getArgs().length; i++) {
+            commandInfo += command.getArgs()[i] + (i == command.getArgs().length - 1 ? "" : ", ");
+          }
+
+          commandInfo += ">";
+        }
+
+        commandInfo += " - " + command.getDescription();
+
+        printMessage(commandInfo, MsgType.GAMEMASTER); // Print the command information
+      }
     }
+
+    printMessage("---------------------------------------------------------------------", MsgType.GAMEMASTER);
+  }
+
+  private static void introduction() {
+    System.out.println();
+    printMessage("Welcome to Undead Game! What's your name?", MsgType.GAMEMASTER);
+    
+    readLine();
+    playerName = currentLine.toUpperCase();
+
+    printMessage("Hello, " + playerName + "!", MsgType.GAMEMASTER);
+    
+    displayCommands();
+  }
+
+  private static void processLine() {
+    if (currentLine.startsWith("" + prefix)) {
+      String command = currentLine.substring(1);
+      String[] args = command.split(" ");
+
+      executeCommand(args);
+    } else {
+      printMessage("Unknown command \"" + currentLine + "\".", MsgType.ERROR);
+      printMessage("Make sure to start your commands with \"" + prefix + "\".", MsgType.WARNING);
+    }
+  }
+
+  private static void executeCommand(String[] args) {
+    for (Command command : commands) {
+      if (command == null || !command.isCommand(args[0])) {
+        continue;
+      }
+
+      if (args.length - 1 < command.getArgs().length) {
+        printMessage("You didn't provide enough arguments for the command \"" + command.getName() + "\".", MsgType.ERROR);
+        printMessage("Make sure to provide the correct amount of arguments.", MsgType.WARNING);
+        return;
+      }
+
+      if (command.run(args)) { // Run the command
+        return;
+      }
+    }
+
+    printMessage("Unknown command \"" + args[0] + "\".", MsgType.ERROR);
   }
 }
