@@ -21,6 +21,12 @@ Halloween is nearly approaching and all the superstitions about the dead are bei
     ```bash
     java -cp bin Main
     ```
+    
+5. To compile code into a .jar file, type the following command:
+
+    ```bash
+    jar -cvf UndeadGame.jar bin/Main.class
+    ```
 
 ## USAGE
 
