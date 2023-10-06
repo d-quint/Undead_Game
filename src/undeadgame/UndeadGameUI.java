@@ -1,6 +1,7 @@
 package undeadgame;
 
 import java.lang.Thread;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import undeadgame.util.*;
@@ -9,7 +10,7 @@ import undeadgame.util.*;
  * A class encapsulating all the UI-related methods of the game
  */
 public class UndeadGameUI {
-  public static Command[] commands;
+  public static ArrayList<Command> commands;
 
   public static final Scanner READ = new Scanner(System.in);
   public static final int DELAY = 300; // in ms
@@ -143,14 +144,14 @@ public class UndeadGameUI {
 
   private static void setup() {
     gameInstance = new UndeadGame();
-    commands = new Command[10];
+    commands = new ArrayList<Command>();
     
     initializeCommands();
   }
 
   private static void initializeCommands() {
     // Initialize all commands, aliases, descriptions, and their actions
-    commands[0] = new Command("START", "Starts the game", new Runnable() {
+    commands.add(new Command("START", "Starts the game", new Runnable() {
       public boolean run(String[] args) {
         if (gameInstance.isRunning()) {
           printMessage("The game has already started!", MsgType.ERROR);
@@ -170,41 +171,42 @@ public class UndeadGameUI {
 
         return true;
       }
-    });
+    }));
 
-    commands[1] = new Command("HELP", "Lists all usable commands", new Runnable() {
+    commands.add(
+      new Command("HELP", "Lists all usable commands", new Runnable() {
       public boolean run(String[] args) {
         displayCommands();
 
         return true;
       }
-    });
+    }));
 
-    commands[2] = new Command("EXIT", "Exit the program", new Runnable() {
+    commands.add(new Command("EXIT", "Exit the program", new Runnable() {
       public boolean run(String[] args) {
         shouldExit = true;
 
         return true;
       }
-    });
+    }));
 
-    commands[3] = new Command("SETPREFIX", new String[] {"NEW_PREFIX"}, "Sets the prefix for commands", new Runnable() {
+    commands.add(new Command("SETPREFIX", new String[] {"NEW_PREFIX"}, "Sets the prefix for commands", new Runnable() {
       public boolean run(String[] args) {
         prefix = args[1].charAt(0);
         printMessage("The prefix has been set to \"" + prefix + "\".", MsgType.GAMEMASTER);
 
         return true;
       }
-    });
+    }));
 
-    commands[4] = new Command("SETNAME", new String[] {"NEW_NAME"}, "Sets the name of the player", new Runnable() {
+    commands.add(new Command("SETNAME", new String[] {"NEW_NAME"}, "Sets the name of the player", new Runnable() {
       public boolean run(String[] args) {
         playerName = args[1].toUpperCase();
         printMessage("Your name has been set to \"" + playerName + "\".", MsgType.GAMEMASTER);
 
         return true;
       }
-    });
+    }));
   }
 
   private static void displayCommands() {

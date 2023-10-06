@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import undeadgame.creatures.*;
 import undeadgame.util.MsgType;
 
+/**
+ * A class encapsulating an Undead with its type (in String)
+ * This is used to easily determine the subtype of an Undead
+ */
 class UndeadWithType {
   private Undead undead;
   private String type;
@@ -68,6 +72,8 @@ public class UndeadGame {
    * This method should be called after the game is initialized.
    */
 	public void start() {
+    running = true;
+
     
 	}
 }
