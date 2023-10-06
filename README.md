@@ -30,8 +30,8 @@ Having been inspired by how users interact with bots in Discord, this game is pl
 
 ## CONTRIBUTING
 
-This was made possible by the combined efforts of:
+This was made possible by the combined efforts of GROUP 50/50 -2:
 
-- me
 - John Christian Paglinawan
+- Dane Ross Quintano
 - Dharmveer Sandhu
