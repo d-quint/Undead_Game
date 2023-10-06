@@ -14,7 +14,7 @@ public class Vampire extends Undead implements Commandable {
   private boolean canAttack;
 
   public static final String[] skills = { "NORMAL ATTACK", "BITE" } ; // Vampire's skills.
-  public static final String[] skillDesc = { "Attack your enemy with your sharp claws! (Damage: 100% of your HP)", "Bite, take a sip of your target's blood, and gain 80% of their HP!" }; // Vampire's skill descriptions.
+  public static final String[] skillDesc = { "Attack your enemy with your sharp claws! (Damage: 100% of your HP)", "Take a sip of your target's blood, and gain 80% of their HP!" }; // Vampire's skill descriptions.
 
   // Constructor:
   public Vampire(String name) {

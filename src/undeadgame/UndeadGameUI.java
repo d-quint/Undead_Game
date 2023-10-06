@@ -162,12 +162,12 @@ public class UndeadGameUI {
 
             switch (displayChoices("Did you want to restart the game?", new String[] { "YES", "NO" }, MsgType.GAMEMASTER)) {
               case 1:
-                gameInstance = new UndeadGame();
                 printMessage("Game restarted successfully.", MsgType.GAMEMASTER);
+                gameInstance.reset();
                 gameInstance.start();
                 break;
               case 2:
-                printMessage("Alright, game not restarted.", MsgType.GAMEMASTER);
+                printMessage("Alright, " + playerName + "!", MsgType.GAMEMASTER);
                 break;
               default:
                 printMessage("You picked an invalid option.", MsgType.ERROR);

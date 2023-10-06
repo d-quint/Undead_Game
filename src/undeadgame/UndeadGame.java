@@ -180,15 +180,14 @@ public class UndeadGame {
 
           if (attacker.isDead()) {
             if ((attacker instanceof Mummy)) {
-              if (!(((Mummy)attacker).diedOnce())) {
-                UndeadGameUI.printMessage(attacker.getName() + " is dead! However, it can still revive!", MsgType.GAMEMASTER);
+              if (((Mummy)attacker).diedOnce()) {
+                UndeadGameUI.printMessage(new String[] {
+                  attacker.getName() + " is dead. Fortunately, it can still revive!"
+                }, MsgType.GAMEMASTER);
+
                 switch (UndeadGameUI.displayChoices("Do you want to revive " + attacker.getName() + "?", new String[]{"YES", "NO"}, MsgType.GAMEMASTER)) {
                   case 1:
-                    if (!reviveMummy((Mummy)attacker)) {
-                      return true;
-                    }
-                    break;
-                  default:
+                    reviveMummy((Mummy)attacker);
                     return true;
                 }
               } 
@@ -244,11 +243,24 @@ public class UndeadGame {
           }
 
           for (Undead undead : deadUndeads) {
+            UndeadGameUI.printMessage(undead.getName() + "'s corpse has been cleaned up!", MsgType.GAMEMASTER);
             creatures.remove(undead);
           }
 
-          UndeadGameUI.printMessage("You have successfully cleaned up all the dead undeads!", MsgType.GAMEMASTER);
+          UndeadGameUI.printMessage(new String[] {"You have successfully cleaned up all the dead undeads!"}, MsgType.GAMEMASTER);
 
+          return true;
+        }
+    ));
+
+    gameCommands.add(
+      new Command("CLOSE",  
+
+        "Closes the game instance and returns back to the main menu", 
+
+        args -> {
+          close();
+          UndeadGameUI.printMessage("Game closed successfully.", MsgType.GAMEMASTER);
           return true;
         }
     ));
@@ -373,6 +385,10 @@ public class UndeadGame {
       UndeadGameUI.printMessage(new String[] {
         target.getName() + " has been slain!",
       }, MsgType.GAMEMASTER);
+
+      if (!(target instanceof Mummy)) {
+        return;
+      }
     }
 
     // Check if target is incapacitated
@@ -474,6 +490,8 @@ public class UndeadGame {
       target.getName() + " has been revived back to full HP! Glory to the might of Ra!"
     }, MsgType.GAMEMASTER);
 
+    target.isDead(false);
+
     return true; 
   }
 
@@ -533,5 +551,18 @@ public class UndeadGame {
     } else {
       return "UNKNOWN";
     }
+  }
+
+  public void reset() {
+    UndeadGameUI.commands.removeAll(gameCommands);
+
+    creatures.clear();
+    gameCommands.clear();
+  }
+
+  public void close() {
+    reset();
+
+    running = false;
   }
 }

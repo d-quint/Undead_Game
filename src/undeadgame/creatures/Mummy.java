@@ -38,6 +38,11 @@ public class Mummy extends Zombie {
   public void update() {
     if (super.getHp() <= 0 && !diedOnce) {
       diedOnce = true;
+    } else if (super.getHp() <= 0 && diedOnce) {
+      super.setHp(0);
+      super.isDead(true);
+      diedOnce = false;
+      return;
     }
 
     super.update();
@@ -76,6 +81,7 @@ public class Mummy extends Zombie {
   public boolean revive() {
     if (diedOnce && super.getHp() <= 0) {
       super.setHp(Zombie.MAX_HP);
+      this.update();
       return true;
     } 
 
