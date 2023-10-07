@@ -76,7 +76,7 @@ public class Mummy extends Zombie {
    * Revives the mummy, but only once per game.
    * When a mummy dies for the first time, the user is prompted if they want to revive it.
    * 
-   * @return  The amount of HP received by the mummy.
+   * @return  Whether the mummy was revived or not.
    */
   public boolean revive() {
     if (diedOnce && super.getHp() <= 0) {
