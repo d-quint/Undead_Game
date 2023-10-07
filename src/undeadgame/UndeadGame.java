@@ -595,7 +595,7 @@ public class UndeadGame {
    * Starts the game.
    * This method should be called after the game is initialized.
    */
-	public void start() {
+  public void start() {
     running = true; // Set the game's running state to true.
 
     introduction(); // Display the introduction message.
