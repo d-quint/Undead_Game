@@ -4,7 +4,7 @@
 
 [Undead Game v1.0.0](https://filebin.net/archive/jzofr3ozo92g7boc/zip)
 
-To run the .jar file, extract it, open a terminal, go to the extracted .jar file's path, and type the following command:
+To run the `Undead_Game.jar` file, extract it, open a terminal, go to the extracted `.jar` file's path, and type the following command:
 
 ```bash
 java -jar Undead_Game.jar
