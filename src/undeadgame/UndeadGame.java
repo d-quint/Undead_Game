@@ -57,7 +57,7 @@ public class UndeadGame {
             new String[]{
               "SKELETON - Can only attack, and has 70% of its HP as attack damage.", 
               "LICH - An immortal Skeleton that can cast a spell, taking the 10% of their target's HP and adding it to its HP.", 
-              "ZOMBIE - Can eat target to heal itself. Cannot attack when HP is lower than 50.", 
+              "ZOMBIE - Can eat target to heal itself. Can only attack when HP is greater than 50.", 
               "MUMMY - A special Zombie that can revive after dying once, but cannot eat its own kind.", 
               "VAMPIRE - Can bite target to heal itself. Cannot attack when HP is 0.", 
               "GHOST - Can haunt to heal, and only receives 10% of the actual damage."
