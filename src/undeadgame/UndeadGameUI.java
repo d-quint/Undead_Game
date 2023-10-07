@@ -4,7 +4,7 @@ import java.lang.Thread;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import undeadgame.util.*;
+import undeadgame.util.MsgType;
 
 /**
  * A class encapsulating all the UI-related methods of the game.
