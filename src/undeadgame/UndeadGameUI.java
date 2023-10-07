@@ -63,6 +63,7 @@ public class UndeadGameUI {
 
       // If shouldExit is true, exit the application.
       if (shouldExit) {
+        printMessage("Goodbye, " + playerName + "!", MsgType.GAMEMASTER);
         return;
       }
     }
