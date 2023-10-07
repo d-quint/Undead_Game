@@ -6,11 +6,18 @@ package undeadgame;
  * into a single object.
  */
 interface Runnable {
+  /**
+   * The method to be executed when the command is run
+   * 
+   * @param args The arguments passed to the command
+   * @return Whether the command was executed successfully
+   */
   public boolean run(String[] args);
 }
 
 /**
  * A class encapsulating a command
+ * It stores the command's name, arguments, description, and action to perform
  */
 public class Command {
   String name;
@@ -54,6 +61,12 @@ public class Command {
     return action.run(args);
   }
 
+  /**
+  * Checks if the given string is the command's name
+  * 
+  * @param command The string to check
+  * @return Whether the string is the command's name
+  */
   public boolean isCommand(String command) {
     if (command.toUpperCase().equals(name)) {
       return true;
