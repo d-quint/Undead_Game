@@ -158,7 +158,7 @@ public class UndeadGame {
         }
     ));
     
-    // GAME COMMAND 3: ATTACK - Command an undead to attack another undead
+    // GAME COMMAND 3: ATTACK - Command an undead to attack another undead.
     gameCommands.add(
       new Command("ATTACK",  
 
@@ -254,7 +254,7 @@ public class UndeadGame {
         }
     ));
 
-    // GAME COMMAND 4: CLEANUP - Deletes all currently dead undeads
+    // GAME COMMAND 4: CLEANUP - Deletes all currently dead undeads.
     gameCommands.add(
       new Command("CLEANUP",  
 
@@ -296,6 +296,7 @@ public class UndeadGame {
         }
     ));
 
+    // GAME COMMAND 5: CLOSE - Closes the game instance and returns back to the main menu.
     gameCommands.add(
       new Command("CLOSE",  
 
