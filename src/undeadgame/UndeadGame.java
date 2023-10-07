@@ -11,7 +11,6 @@ import undeadgame.util.MsgType;
  * This class is also responsible for initializing the game-specific commands.
  */
 public class UndeadGame {
-  private boolean gameOver;
   private boolean running;
 
   /**
@@ -26,7 +25,6 @@ public class UndeadGame {
 
   // Constructor:
   public UndeadGame() {
-    gameOver = false;
     running = false;
 
     creatures = new ArrayList<Undead>();
@@ -34,19 +32,11 @@ public class UndeadGame {
   }
 
   // Getters:
-  public boolean isGameOver() {
-    return gameOver;
-  }
-
   public boolean isRunning() {
     return running;
   }
 
   // Setters:
-  public void setGameOver(boolean gameOver) {
-    this.gameOver = gameOver;
-  }
-
   public void setIsRunning(boolean running) {
     this.running = running;
   }
