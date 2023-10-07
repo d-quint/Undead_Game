@@ -101,7 +101,7 @@ public class UndeadGame {
           }
 
           if (alreadyExists(undead)) {
-            UndeadGameUI.printMessage("An undead named " + undead.getName() + " already exists!", MsgType.ERROR);
+            UndeadGameUI.printMessage("An undead named " + undeadName + " already exists!", MsgType.ERROR);
             return true;
           }
 
