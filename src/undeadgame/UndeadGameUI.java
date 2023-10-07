@@ -192,11 +192,11 @@ public class UndeadGameUI {
    * It adds all the commands to the commands arraylist.
    */
   private static void initializeCommands() {
-    // COMMAND 1: START - Starts the game.
+    // COMMAND 1: START - Starts the game instance, allowing you to use more game-related commands.
     commands.add(
       new Command("START",
 
-        "Starts the game",
+        "Starts the game instance, allowing you to use more game-related commands",
         
         args -> {
           // First, check if the game is already running.
@@ -229,11 +229,11 @@ public class UndeadGameUI {
         }
     ));
 
-    // COMMAND 2: HELP - Lists all usable commands.
+    // COMMAND 2: HELP - Lists all currently usable commands.
     commands.add(
       new Command("HELP",
 
-        "Lists all usable commands",
+        "Lists all currently usable commands",
 
         args -> {
           displayCommands(); // Display all commands.
@@ -245,7 +245,7 @@ public class UndeadGameUI {
     commands.add(
       new Command("EXIT",
 
-        "Exit the program",
+        "Exits the program",
         
         args -> {
           shouldExit = true; // Set shouldExit to true to indicate that the program should exit.
@@ -253,13 +253,13 @@ public class UndeadGameUI {
         }
     ));
 
-    // COMMAND 4: SETPREFIX - Sets the prefix for commands.
+    // COMMAND 4: SETPREFIX - Sets a new prefix for typing commands.
     commands.add(
       new Command("SETPREFIX",
 
         new String[] { "NEW_PREFIX" },
 
-        "Sets the prefix for commands",
+        "Sets a new prefix for typing commands",
 
         args -> {
           // Set the prefix to the first character of the second argument.
@@ -272,13 +272,13 @@ public class UndeadGameUI {
         }
     ));
 
-    // COMMAND 5: SETNAME - Sets the name of the player.
+    // COMMAND 5: SETNAME - Sets a new name for the player.
     commands.add(
       new Command("SETNAME",
 
         new String[] { "NEW_NAME" },
 
-        "Sets the name of the player",
+        "Sets a new name for the player",
 
         args -> {
           // Set the name of the player to the second argument.

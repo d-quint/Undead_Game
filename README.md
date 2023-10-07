@@ -38,11 +38,26 @@ Halloween is nearly approaching and all the superstitions about the dead are bei
 
 Having been inspired by how users interact with bots in Discord, this game is played by typing prefixed commands into the terminal.
 
-(todo: add list of commands)
+### COMMANDS
+
+| **COMMAND NAME** |   **ARG 1**   |  **ARG 2**  |                              **DESCRIPTION**                              |   **SAMPLE USAGE**  |
+|:----------------:|:-------------:|:-----------:|:-------------------------------------------------------------------------:|:-------------------:|
+|       START      |       -       |      -      | Starts the game instance, allowing you to use more game-related commands. |       `!start`      |
+|       HELP       |       -       |      -      |                    Lists all currently usable commands.                   |       `!help`       |
+|       EXIT       |       -       |      -      |                             Exits the program.                            |       `!exit`       |
+|     SETPREFIX    |   NEW_PREFIX  |      -      |                   Sets a new prefix for typing commands.                  |    `setprefix >`    |
+|      SETNAME     |    NEW_NAME   |      -      |                      Sets a new name for the player.                      |   `!setname Marcy`  |
+|     POPULATE     |       -       |      -      |                 Raises an undead from the depths of hell.                 |     `!populate`     |
+|    LISTUNDEADS   |       -       |      -      |                   Lists all the undeads you have raised.                  |    `!listundeads`   |
+|      ATTACK      | ATTACKER_NAME | TARGET_NAME |                Command an undead to attack another undead.                | `!attack Finn Lich` |
+|      CLEANUP     |       -       |      -      |                    Deletes all currently dead undeads.                    |      `!cleanup`     |
+|       CLOSE      |       -       |      -      |        Closes the game instance and returns back to the main menu.        |       `!close`      |
+
+NOTE: The prefix is set to `!` by default. You can change it by using the `SETPREFIX` command. The prefix can be any character, but it is recommended to use a character that is not used by any other command, such as a letter.
 
 ## CONTRIBUTING
 
-This was made possible by the combined efforts of GROUP 50/50 -2:
+This was made possible by the combined efforts of Group 50/50 -2 of TN22:
 
 - John Christian Paglinawan
 - Dane Ross Quintano
