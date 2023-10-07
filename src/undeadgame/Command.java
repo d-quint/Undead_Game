@@ -1,13 +1,12 @@
 package undeadgame;
 
 /**
- * An interface containing a single method, run()
- * This is used to encapsulate a command's action
- * into a single object.
+ * An interface containing a single method, run().
+ * This is used to encapsulate a command's action into a single object.
  */
 interface Runnable {
   /**
-   * The method to be executed when the command is run
+   * The method to be executed when the command is run.
    * 
    * @param args The arguments passed to the command
    * @return Whether the command was executed successfully
@@ -16,15 +15,15 @@ interface Runnable {
 }
 
 /**
- * A class encapsulating a command
- * It stores the command's name, arguments, description, and action to perform
+ * A class encapsulating a command.
+ * It stores the command's name, arguments, description, and action to perform.
  */
 public class Command {
   String name;
   String[] args;
   String description;
 
-  Runnable action; // The action to be executed when the command is run
+  Runnable action; // The action to be executed when the command is run.
 
   public Command(String name, String[] args, String description, Runnable action) {
     this.name = name;
@@ -62,7 +61,7 @@ public class Command {
   }
 
   /**
-  * Checks if the given string is the command's name
+  * Checks if the given string is the command's name.
   * 
   * @param command The string to check
   * @return Whether the string is the command's name
