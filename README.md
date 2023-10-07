@@ -32,7 +32,7 @@ Halloween is nearly approaching and all the superstitions about the dead are bei
     java -cp bin Main
     ```
 
-5. Alternatively, just double click the run.bat file in the current directory which would automatically run these two commands for you.
+5. Alternatively, just double click the `run.bat` file in the current directory which would automatically run these two commands for you.
 
 ## USAGE
 
