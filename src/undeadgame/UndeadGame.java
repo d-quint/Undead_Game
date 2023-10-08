@@ -606,7 +606,7 @@ public class UndeadGame {
     for (Command command : gameCommands) {
       UndeadGameUI.commands.add(command);
     }
-	}
+  }
 
   /**
    * This method displays the introduction message of the game.
