@@ -303,6 +303,9 @@ public class UndeadGame {
    * @return          True if the immortal can attack, false otherwise.
    */
   private boolean canImmortalAttack(Undead immortal) {
+    // First, update the immortal's status.
+    ((Commandable)immortal).update();
+
     // Check if the immortal is a Lich.
     if ((immortal instanceof Lich)) {
       // If the Lich cannot attack, display a message to the user.
@@ -337,6 +340,8 @@ public class UndeadGame {
             immortal.getName() + " has been incapacitated! It cannot attack anymore!",
             "Fortunately, it can still eat!"
           }, MsgType.GAMEMASTER);
+
+          return false; // Return false to indicate that the immortal cannot attack.
         }
       }
 
@@ -346,9 +351,9 @@ public class UndeadGame {
           immortal.getName() + " has been incapacitated! It cannot attack anymore!",
           "Fortunately, it can still eat!"
         }, MsgType.GAMEMASTER);
-      }
 
-      return false; // Return false to indicate that the immortal cannot attack.
+        return false; // Return false to indicate that the immortal cannot attack.
+      }
     }
 
     return true; // Return true to indicate that the immortal can attack.
