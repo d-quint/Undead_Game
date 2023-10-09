@@ -52,10 +52,6 @@ public class Vampire extends Undead implements Commandable {
     } else { 
       this.canAttack(true);
     }
-
-    // Limit the HP of the vampire to the maximum HP.
-    int cappedHP = Math.min(super.getHp(), MAX_HP);
-    super.setHp(cappedHP);
   }
 
   @Override
