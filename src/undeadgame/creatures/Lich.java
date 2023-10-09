@@ -44,24 +44,19 @@ public class Lich extends Skeleton {
     } else { 
       this.canAttack(true);
     }
-    
-    // Cap the Lich's HP to its max HP
-    int cappedHP = Math.min(super.getHp(), Skeleton.MAX_HP);
-    super.setHp(cappedHP);
   }
 
   /**
    * SKILL 1: CAST SPELL
    * This method is called when the Lich casts a spell on another undead. The Lich
-   * will receive 10% of the HP of the undead being casted. The enemy will lose HP
-   * in the process, while the Lich will gain HP.
+   * will receive 10% of the HP of the undead being casted. The Lich will gain HP.
    * 
    * @param  target  The commandable undead being casted a spell.
    * @return         The amount of HP received by the Lich.
    */
   @Override
   public int skill1(Commandable target) {
-    int heal = target.receiveDamage((int)(((Undead)target).getHp() * 0.1));
+    int heal = ((Undead)target).getHp() * 0.1);
     return -super.receiveDamage(-heal);
   }
 }
