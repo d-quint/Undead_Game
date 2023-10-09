@@ -387,11 +387,6 @@ public class UndeadGame {
         deltaHP = ((Commandable)attacker).skill1((Commandable)target);
         isHeal = true;
 
-        // If the attacker is a Lich, its skill 1 is both an attack and a heal.
-        if (attacker instanceof Lich) {
-          isHeal = isAttack = true;
-        }
-
         // If the attacker is a Mummy and deltaHP returned an Error code,
         // it means that the Mummy tried to eat another Mummy.
         if (attacker instanceof Mummy && deltaHP == -444) {
