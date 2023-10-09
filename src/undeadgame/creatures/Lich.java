@@ -56,7 +56,7 @@ public class Lich extends Skeleton {
    */
   @Override
   public int skill1(Commandable target) {
-    int heal = ((Undead)target).getHp() * 0.1);
+    int heal = (int) (((Undead)target).getHp() * 0.1);
     return -super.receiveDamage(-heal);
   }
 }

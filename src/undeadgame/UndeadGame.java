@@ -231,11 +231,6 @@ public class UndeadGame {
             return true;
           }
 
-          // Next, check if they are incapacitated immortals.
-          if (!canImmortalAttack(attacker)) {
-            return true;
-          }
-
           // Finally, commence the attack.
           // This will display the results of the attack, and affect Undead states based on the attack.
           commenceAttack(attacker, target);
@@ -340,9 +335,8 @@ public class UndeadGame {
         if (!((Mummy)immortal).canItAttack()) {
           UndeadGameUI.printMessage(new String[] {
             immortal.getName() + " has been incapacitated! It cannot attack anymore!",
+            "Fortunately, it can still eat!"
           }, MsgType.GAMEMASTER);
-
-          return false; // Return false to indicate that the immortal cannot attack.
         }
       }
 
@@ -350,10 +344,11 @@ public class UndeadGame {
       if (!((Zombie)immortal).canItAttack()) {
         UndeadGameUI.printMessage(new String[] {
           immortal.getName() + " has been incapacitated! It cannot attack anymore!",
+          "Fortunately, it can still eat!"
         }, MsgType.GAMEMASTER);
-
-        return false; // Return false to indicate that the immortal cannot attack.
       }
+
+      return false; // Return false to indicate that the immortal cannot attack.
     }
 
     return true; // Return true to indicate that the immortal can attack.
@@ -380,6 +375,11 @@ public class UndeadGame {
     // Check which skill the attacker used.
     switch (skill) {
       case 1: // NORMAL SKILL
+        // First, check if the attacker is incapacitated or cannot attack in its current state.
+        if (!canImmortalAttack(attacker)) {
+          return; // Return to indicate that the attack has failed to commence.
+        }
+      
         deltaHP = ((Commandable)attacker).normalAttack((Commandable)target);
         isAttack = true;
         break;
