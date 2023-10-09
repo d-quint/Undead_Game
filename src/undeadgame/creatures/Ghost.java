@@ -50,10 +50,6 @@ public class Ghost extends Undead implements Commandable {
       super.setHp(0);
       super.isDead(true);
     }
-
-    // Limit the HP of the ghost to the maximum HP.
-    int cappedHP = Math.min(super.getHp(), MAX_HP);
-    super.setHp(cappedHP);
   }
 
   /**
