@@ -2,7 +2,7 @@
 
 ## DOWNLOAD .JAR FILE
 
-[Undead Game v1.0.0](https://filebin.net/archive/jzofr3ozo92g7boc/zip)
+[Undead Game v1.0.0](https://drive.google.com/file/d/1M3-nXcB614eWELlOPbhyPqwiOGM-DliT/view?usp=sharing)
 
 To run the `Undead_Game.jar` file, extract it, open a terminal, go to the extracted `.jar` file's path, and type the following command:
 
